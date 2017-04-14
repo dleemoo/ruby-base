@@ -3,10 +3,7 @@ FROM dleemoo/ruby-base:2.3.0
 MAINTAINER Leonardo Lobo Lima <dleemoo@gmail.com>
 
 # Enviroment (bundler, gem, directory paths and PATH)
-# gem --version: 2.5.1 (from ruby-base:2.3.0)
-ENV BUNDLER_VERSION=1.14.6 \
-    APP_HOME=/app \
-    USER_HOME=/home/app \
+ENV APP_HOME=/app \
     GEM_HOME=/gems \
     BUNDLE_PATH=/gems \
     BUNDLE_BIN=/gems/bin \
@@ -17,10 +14,10 @@ ENV BUNDLER_VERSION=1.14.6 \
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 
 # install gosu and bundler and set directories ownership
-RUN wget -O /usr/local/bin/gosu https://github.com/tianon/gosu/releases/download/1.10/gosu-amd64 \
-    && mkdir -p $USER_HOME $APP_HOME $GEM_BIN \
+RUN wget -qO /usr/local/bin/gosu https://github.com/tianon/gosu/releases/download/1.10/gosu-amd64 \
+    && mkdir -p $APP_HOME $BUNDLE_BIN \
     && chmod +x /usr/local/bin/entrypoint.sh /usr/local/bin/gosu \
-    && gem install bundler --version "$BUNDLER_VERSION"
+    && gem update --system 1>/dev/null
 
 WORKDIR $APP_HOME
 

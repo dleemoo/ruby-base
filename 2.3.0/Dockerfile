@@ -1,4 +1,4 @@
-FROM dleemoo/base:3.4
+FROM dleemoo/base:latest
 
 MAINTAINER Leonardo Lobo Lima <dleemoo@gmail.com>
 
@@ -7,7 +7,7 @@ ENV RUBY_MAJOR=2.3 \
     RUBY_VERSION=2.3.0 \
     RUBY_DOWNLOAD_SHA256=70125af0cfd7048e813a5eecab3676249582bfb65cfd57b868c3595f966e4097
 
-# upgrade alpine and install Ruby
+# install Ruby
 RUN set -ex \
   # download, compile and install Ruby
   && echo "downloading: https://cache.ruby-lang.org/pub/ruby/${RUBY_MAJOR%-rc}/ruby-$RUBY_VERSION.tar.xz" \
