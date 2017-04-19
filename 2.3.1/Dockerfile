@@ -22,7 +22,7 @@ RUN set -ex \
   && make install \
   && cd / \
   # rmove temporary files
-  && rm -rf /tmp/ruby /tmp/ruby.tar.gz \
+  && rm -rf /tmp/ruby* \
   # do not generate gem docs by default
   && mkdir -p /usr/local/etc && { \
       echo 'install: --no-document'; \
