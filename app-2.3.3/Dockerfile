@@ -11,14 +11,16 @@ ENV APP_HOME=/app \
     PATH=/gems/bin:$PATH
 
 # script to runs container as normal user
-COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+COPY entrypoint.sh /usr/share/docker/entrypoint.sh
 
-# install gosu and bundler and set directories ownership
-RUN wget -qO /usr/local/bin/gosu https://github.com/tianon/gosu/releases/download/1.10/gosu-amd64 \
+# setup basic environment to run as normal user and use /gems/bin
+RUN set -ex \
     && mkdir -p $APP_HOME $BUNDLE_BIN \
-    && chmod +x /usr/local/bin/entrypoint.sh /usr/local/bin/gosu \
+    && curl -sL https://github.com/tianon/gosu/releases/download/1.10/gosu-amd64 -o /usr/local/bin/gosu \
+    && sed -i s@'PATH="\(.*\)"'@'PATH="/gems/bin:\1"'@g /etc/profile \
+    && chmod +x /usr/share/docker/entrypoint.sh /usr/local/bin/gosu \
     && gem update --system 1>/dev/null
 
 WORKDIR $APP_HOME
 
-ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+ENTRYPOINT ["/usr/share/docker/entrypoint.sh"]

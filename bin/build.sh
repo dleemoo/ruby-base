@@ -23,10 +23,25 @@ function build() {
      && cd $root_dir
 }
 
+function fbuild() {
+  image=$1
+  repo=$2
+
+  cd $image \
+     && docker build --no-cache --rm -t $image . \
+     && docker tag $(docker images -q $image | head -n1) $repo \
+     && cd $root_dir
+}
+
 if [ ${#list[@]} -gt 0 ]; then
-  build base "dleemoo/base:latest"
+  build base "dleemoo/base:latest" &&
   for i in "${list[@]}"; do
-    build "rb-${i}" "dleemoo/ruby-base:${i}"
-    build "app-${i}" "dleemoo/app:${i}"
+    build "rb-${i}" "dleemoo/ruby-base:${i}" && {
+      if [ "$FORCE_APP_BUILD" == "true" ]; then
+        fbuild "app-${i}" "dleemoo/app:${i}"
+      else
+        build "app-${i}" "dleemoo/app:${i}"
+      fi
+    }
   done
 fi
