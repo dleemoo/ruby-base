@@ -1,5 +1,10 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
-docker push dleemoo/base:latest
-docker push dleemoo/ruby-base
-docker push dleemoo/app
+declare -a all_versions=(2.3.0 2.3.1 2.3.3 2.4.1)
+
+docker push dleemoo/base
+
+for i in "${all_versions[@]}"; do
+  docker push dleemoo/ruby-base-${i}
+  docker push dleemoo/app-${i}
+done

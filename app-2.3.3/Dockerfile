@@ -1,4 +1,4 @@
-FROM dleemoo/ruby-base:2.3.3
+FROM dleemoo/ruby-base-2.3.3
 
 MAINTAINER Leonardo Lobo Lima <dleemoo@gmail.com>
 

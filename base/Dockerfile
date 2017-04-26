@@ -2,6 +2,8 @@ FROM debian:jessie-slim
 
 MAINTAINER Leonardo Lobo Lima <dleemoo@gmail.com>
 
+ENV LANG=C.UTF-8
+
 RUN set -ex \
   # do not generate debian documentation files
   && echo 'path-exclude /usr/share/doc/*'            > /etc/dpkg/dpkg.cfg.d/01_nodoc \
