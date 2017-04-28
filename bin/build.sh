@@ -23,8 +23,8 @@ function build() {
      && cd $root_dir
 }
 
+build base "dleemoo/base" &&
 if [ ${#list[@]} -gt 0 ]; then
-  build base "dleemoo/base" &&
   for i in "${list[@]}"; do
     build "rb-${i}" "dleemoo/ruby-base-${i}" &&
     build "app-${i}" "dleemoo/app-${i}"
