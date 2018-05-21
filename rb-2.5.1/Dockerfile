@@ -1,11 +1,11 @@
-FROM dleemoo/base:0.0.2
+FROM dleemoo/base:0.0.3
 
 MAINTAINER Leonardo Lobo Lima <dleemoo@gmail.com>
 
 # environment variables for Ruby build
-ENV RUBY_MAJOR=2.3 \
-    RUBY_VERSION=2.3.0 \
-    RUBY_DOWNLOAD_SHA256=70125af0cfd7048e813a5eecab3676249582bfb65cfd57b868c3595f966e4097
+ENV RUBY_MAJOR=2.5 \
+    RUBY_VERSION=2.5.1 \
+    RUBY_DOWNLOAD_SHA256=886ac5eed41e3b5fc699be837b0087a6a5a3d10f464087560d2d21b3e71b754d
 
 RUN set -ex \
   # update debian and install dependencies

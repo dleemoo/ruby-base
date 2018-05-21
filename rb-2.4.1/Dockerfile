@@ -1,4 +1,4 @@
-FROM dleemoo/base:latest
+FROM dleemoo/base:0.0.2
 
 MAINTAINER Leonardo Lobo Lima <dleemoo@gmail.com>
 
