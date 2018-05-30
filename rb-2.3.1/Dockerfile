@@ -1,21 +1,24 @@
-FROM dleemoo/base:0.0.2
+FROM dleemoo/base:0.0.4
 
 MAINTAINER Leonardo Lobo Lima <dleemoo@gmail.com>
 
 # environment variables for Ruby build
 ENV RUBY_MAJOR=2.3 \
     RUBY_VERSION=2.3.1 \
-    RUBY_DOWNLOAD_SHA256=6725b5534d5a3a21ec4f14d6d7b9921a0d00d08acb88fd04cd50b47b70496338
+    RUBY_DOWNLOAD_SHA256=b87c738cb2032bf4920fef8e3864dc5cf8eae9d89d8d523ce0236945c5797dcd
 
 RUN set -ex \
   # update debian and install dependencies
   && apt-get update \
   && DEBIAN_FRONTEND=noninteractive apt-get upgrade -y \
+  # downgrade openssl for ruby < 2.4
+  # https://github.com/rbenv/ruby-build/wiki#openssl-usrincludeopensslasn1_mach102-error-error-this-file-is-obsolete-please-update-your-software
+  && DEBIAN_FRONTEND=noninteractive apt-get install -y libssl1.0-dev \
   # download, compile and install Ruby
-  && curl -sL "https://cache.ruby-lang.org/pub/ruby/${RUBY_MAJOR%-rc}/ruby-$RUBY_VERSION.tar.xz" -o /tmp/ruby.tar.xz \
-  && echo "$RUBY_DOWNLOAD_SHA256 /tmp/ruby.tar.xz" | sha256sum -c - \
+  && curl -sL "https://cache.ruby-lang.org/pub/ruby/${RUBY_MAJOR%-rc}/ruby-$RUBY_VERSION.tar.gz" -o /tmp/ruby.tar.gz \
+  && echo "$RUBY_DOWNLOAD_SHA256 /tmp/ruby.tar.gz" | sha256sum -c - \
   && mkdir -p /tmp/ruby \
-  && tar xf /tmp/ruby.tar.xz -C /tmp/ruby --strip-components=1 \
+  && tar xf /tmp/ruby.tar.gz -C /tmp/ruby --strip-components=1 \
   && cd /tmp/ruby \
   && autoconf 1>/dev/null \
   && ac_cv_func_isnan=yes ac_cv_func_isinf=yes ./configure --disable-install-doc --enable-shared 1>/dev/null \
