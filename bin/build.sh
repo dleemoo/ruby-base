@@ -2,7 +2,7 @@
 
 root_dir=$(pwd)
 
-declare -a all_versions=(base 2.3.0 2.3.1 2.3.3 2.4.1 2.5.1)
+declare -a all_versions=(base 2.3.0 2.3.1 2.3.3 2.3.7 2.4.1 2.5.1)
 
 if [ -z "$1" ]; then
   declare -a list=(${all_versions[@]})
